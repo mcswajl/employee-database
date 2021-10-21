@@ -28,13 +28,6 @@ const dbconnection = mysql.createConnection({
 console.log("Connected to the emloyees_db database")
 );
 
-let deletedRow = 2;
-
-dbconnection.query("SELCET * FROM department", function (err, results) {
-  console.log(results);
-});
-  
-
 // Start server after DB connection
 dbconnection.connect(err => {
   if (err) throw err;
@@ -42,6 +35,10 @@ dbconnection.connect(err => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
+});
+
+dbconnection.query("SELCET * FROM department", function (err, results) {
+  console.log(results);
 });
 
 function employeeActions() {
