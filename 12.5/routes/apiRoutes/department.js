@@ -3,9 +3,9 @@ const router = express.Router();
 const db = require('../../db/connection');
 const inputCheck = require('../../utils/inputCheck');
 
-// Get all voters alphabetized by last name
-router.get('/voters', (req, res) => {
-  const sql = `SELECT * FROM voters ORDER BY last_name`;
+// Get all departments alphabetized by name
+router.get('/department', (req, res) => {
+  const sql = `SELECT * FROM department ORDER BY name`;
 
   db.query(sql, (err, rows) => {
     if (err) {
@@ -19,9 +19,9 @@ router.get('/voters', (req, res) => {
   });
 });
 
-// Get single voter
-router.get('/voter/:id', (req, res) => {
-  const sql = `SELECT * FROM voters WHERE id = ?`;
+// Get single department
+router.get('/department/:id', (req, res) => {
+  const sql = `SELECT * FROM department WHERE id = ?`;
   const params = [req.params.id];
 
   db.query(sql, params, (err, row) => {
@@ -36,16 +36,16 @@ router.get('/voter/:id', (req, res) => {
   });
 });
 
-// Create a voter
-router.post('/voter', ({ body }, res) => {
-  const errors = inputCheck(body, 'first_name', 'last_name', 'email');
+// Create a department
+router.post('/department', ({ body }, res) => {
+  const errors = inputCheck(body, 'name', 'id');
   if (errors) {
     res.status(400).json({ error: errors });
     return;
   }
 
-  const sql = `INSERT INTO voters (first_name, last_name, email) VALUES (?,?,?)`;
-  const params = [body.first_name, body.last_name, body.email];
+  const sql = `INSERT INTO department (name, id) VALUES (?,?,?)`;
+  const params = [body.name, body.id];
 
   db.query(sql, params, (err, result) => {
     if (err) {
@@ -59,23 +59,23 @@ router.post('/voter', ({ body }, res) => {
   });
 });
 
-// Update a voter's email
-router.put('/voter/:id', (req, res) => {
-  const errors = inputCheck(req.body, 'email');
+// Update a department id
+router.put('/de[artment/:id', (req, res) => {
+  const errors = inputCheck(req.body, 'id');
   if (errors) {
     res.status(400).json({ error: errors });
     return;
   }
 
-  const sql = `UPDATE voters SET email = ? WHERE id = ?`;
-  const params = [req.body.email, req.params.id];
+  const sql = `UPDATE department SET id = ? WHERE id = ?`;
+  const params = [req.params.id];
 
   db.query(sql, params, (err, result) => {
     if (err) {
       res.status(400).json({ error: err.message });
     } else if (!result.affectedRows) {
       res.json({
-        message: 'Voter not found'
+        message: 'department not found'
       });
     } else {
       res.json({
@@ -87,16 +87,16 @@ router.put('/voter/:id', (req, res) => {
   });
 });
 
-// Delete a voter
-router.delete('/voter/:id', (req, res) => {
-  const sql = `DELETE FROM voters WHERE id = ?`;
+// Delete a department by id
+router.delete('/department/:id', (req, res) => {
+  const sql = `DELETE FROM department WHERE id = ?`;
 
   db.query(sql, req.params.id, (err, result) => {
     if (err) {
       res.status(400).json({ error: res.message });
     } else if (!result.affectedRows) {
       res.json({
-        message: 'Voter not found'
+        message: 'department not found'
       });
     } else {
       res.json({
