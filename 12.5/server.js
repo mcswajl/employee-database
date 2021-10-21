@@ -23,7 +23,7 @@ const dbconnection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "Wlbm1978*",
-    database: "employees_db"
+    database: "employee_db"
 },
 console.log("Connected to the emloyees_db database")
 );
@@ -45,12 +45,12 @@ function employeeActions() {
   inquirer.prompt({name: "name", type: "list", message: "Select an action", options: [
     "Add a Role",
     "Add a Department",
-    "View an Employees",
+    "View an Employee",
     "View an Employee by Department",
     "View an Employee by Manager",
     "Add an Employee",
-    "Update an Employees Role",
-    "Update an Employees Manager",
+    "Update an Employee Role",
+    "Update an Employee Manager",
     "Add a new Role",
     "Exit"
     
