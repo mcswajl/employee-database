@@ -1,60 +1,108 @@
-const express = require('express');
-// const db = require('./db/connection');
 const mysql = require("mysql2")
 const inquirer = require("inquirer");
-
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-// // Use apiRoutes
-// app.use('/api', apiRoutes);
-
-// // Default response for any other request (Not Found)
-// app.use((req, res) => {
-//   res.status(404).end();
-// });
+require('console.table');
 
 // MySQL db Connection
-const dbconnection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Wlbm1978*",
-    database: "employee_db"
-},
-console.log("Connected to the emloyees_db database")
-);
+const db = require('./db/connection');
 
 // Start server after DB connection
-dbconnection.connect(err => {
+db.connect(err => {
   if (err) throw err;
   console.log('Database connected.');
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-});
 
-dbconnection.query("SELCET * FROM department", function (err, results) {
-  console.log(results);
-});
+  function employeeActions() {
+    inquirer.prompt({
+      name: "name", type: "list", message: "What would you like to do", choices: [
+        "view all departments",
+        "view all roles",
+        "view all employee",
+        "add a department",
+        "add a new role",
+        "view roles",
+        "add a role",
+        "add an employee",
+        "update an employee role",
+        "Exit"
 
-function employeeActions() {
-  inquirer.prompt({name: "name", type: "list", message: "Select an action", options: [
-    "Add a Role",
-    "Add a Department",
-    "View an Employee",
-    "View an Employee by Department",
-    "View an Employee by Manager",
-    "Add an Employee",
-    "Update an Employee Role",
-    "Update an Employee Manager",
-    "Add a new Role",
-    "Exit"
-    
-  ]
-})
+      ]
 
-}
+    }).then(
+      (answer) => {
+        console.log(answer.name)
+        if (answer.name == "view all departments") {
+          db.query("SELECT * FROM department", function (err, results) {
+            if(err) {
+              console.log(err)
+            }
+            console.table(results);
+          });
+        }
+      }),
+    }
+  }
+    // } else if (answer.name == 'View all Roles') {
+    //   db.query("SELECT * FROM roles", function (err, results) {
+    //     if(err) {
+    //       console.log(err)
+    //     }
+    //     console.table(results);
+    //   });
+    // }
+
+
+    }).then(
+      (answer) => {
+        console.log(answer.name)
+        if (answer.name == "Add a new Role") {
+          inquirer.prompt([
+            {
+              name: "title",
+              type: "input",
+              message: "What is the title of the role?"
+            },
+            {
+              name: "salary",
+              type: "input",
+              message: "What is the salary of the role?"
+            },
+            {
+              name: "department_id",
+              type: "input",
+              message: "What is the department_id of the role?"
+            },
+          ])
+            .then((ans) => {
+              db.query("INSERT INTO roles SET ?", ans, function (err, results) {
+                if(err) {
+                  console.log(err)
+                }
+                console.log(results);
+              });
+            })
+
+        } else if (answer.name == 'View all Roles') {
+          db.query("SELECT * FROM roles", function (err, results) {
+            if(err) {
+              console.log(err)
+            }
+            console.table(results);
+          });
+        }
+      })
+
+  employeeActions();
+
+
+    // let deleteRow = 2;
+
+    // db.query("DELETE FROM employee Where id = ?", deleteRow, (err, results) => {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    //   console.log(results);
+    // });
+
+// db.query("SELECT * FROM employee", function (err, results) {
+//   console.log(results);
+// });
+

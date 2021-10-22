@@ -36,15 +36,15 @@ router.get('/department/:id', (req, res) => {
   });
 });
 
-// Create a department
-router.post('/department', ({ body }, res) => {
-  const errors = inputCheck(body, 'name', 'id');
-  if (errors) {
-    res.status(400).json({ error: errors });
-    return;
-  }
+// // Create a department
+// router.post('/department', ({ body }, res) => {
+//   const errors = inputCheck(body, 'name', 'id');
+//   if (errors) {
+//     res.status(400).json({ error: errors });
+//     return;
+//   }
 
-  const sql = `INSERT INTO department (name, id) VALUES (?,?,?)`;
+  const sql = `INSERT INTO department (name, id) VALUES (?,?)`;
   const params = [body.name, body.id];
 
   db.query(sql, params, (err, result) => {
@@ -59,13 +59,13 @@ router.post('/department', ({ body }, res) => {
   });
 });
 
-// Update a department id
-router.put('/de[artment/:id', (req, res) => {
-  const errors = inputCheck(req.body, 'id');
-  if (errors) {
-    res.status(400).json({ error: errors });
-    return;
-  }
+// // Update a department id
+// router.put('/department/:id', (req, res) => {
+//   const errors = inputCheck(req.body, 'id');
+//   if (errors) {
+//     res.status(400).json({ error: errors });
+//     return;
+//   }
 
   const sql = `UPDATE department SET id = ? WHERE id = ?`;
   const params = [req.params.id];

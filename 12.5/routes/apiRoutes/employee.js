@@ -23,7 +23,7 @@ router.get('/employee', (req, res) => {
   });
 });
 
-// Get single employee with party role
+// Get single employee with role
 router.get('/employee/:id', (req, res) => {
   const sql = `SELECT employee.*, last_name 
                AS last_name 

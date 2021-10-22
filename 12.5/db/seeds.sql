@@ -1,4 +1,4 @@
-INSERT INTO department (name) 
+INSERT INTO department (name, description) 
 VALUES 
 ("Parks:"),
 ("Rec:"),
@@ -6,7 +6,7 @@ VALUES
 ("AQ:"),
 ("ITS:"); 
 
-INSERT INTO role (title, department_id, salary) 
+INSERT INTO roles (title, department_id, salary) 
 VALUES 
 ("Inspector1", 1, 35000),
 ("Inspector2", 1, 45000),
@@ -20,7 +20,7 @@ VALUES
 ("Developer2", 5, 95000);
   
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id) 
+INSERT INTO employee (first_name, last_name, roles_id, manager_id) 
 VALUES 
 ("Gerald", "Griffin", 1, NULL),
 ("William", "Carleton", 2, 1),
@@ -39,7 +39,7 @@ VALUES
 ("Scott", "Brown", 9, 3),
 
 ("Sue", "Hamrick", 10, NULL),
-("Kristy", "Carter", 11, 3);
+("Kristy", "Carter", 10, 3);
 
 
   

@@ -4,7 +4,7 @@ const db = require('../../db/connection');
 const inputCheck = require('../../utils/inputCheck');
 
 // Get the total salary for departments
-router.get('/role', (req, res) => {
+router.get('/roles', (req, res) => {
   const sql = `SELECT role.*, salary.name AS salary, 
                 COUNT(department_id) 
                 AS count FROM role 
