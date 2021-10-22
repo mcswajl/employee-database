@@ -11,22 +11,20 @@ db.connect(err => {
   console.log('Database connected.');
 
   function employeeActions() {
-    inquirer.prompt({
+    inquirer.prompt([
+      {
       name: "name", type: "list", message: "What would you like to do", choices: [
         "view all departments",
         "view all roles",
         "view all employee",
         "add a department",
         "add a new role",
-        "view roles",
-        "add a role",
         "add an employee",
         "update an employee role",
         "Exit"
-
       ]
-
-    }).then(
+    }
+  ]).then(
       (answer) => {
         console.log(answer.name)
         if (answer.name == "view all departments") {
@@ -40,15 +38,47 @@ db.connect(err => {
       }),
     }
   }
-    // } else if (answer.name == 'View all Roles') {
-    //   db.query("SELECT * FROM roles", function (err, results) {
-    //     if(err) {
-    //       console.log(err)
-    //     }
-    //     console.table(results);
-    //   });
-    // }
-
+  _______________________
+    } else if (answer.name == 'view all roles') {
+      db.query("SELECT * FROM roles", function (err, results) {
+        if(err) {
+          console.log(err)
+        }
+        console.table(results);
+      });
+    }
+______________________
+  } else if (answer.name == 'view all employees') {
+    db.query("SELECT * FROM employee", function (err, results) {
+      if(err) {
+        console.log(err)
+      }
+      console.table(results);
+    });
+  }
+________________
+  if (answer.name == "Add a new department") {
+    inquirer.prompt([
+      {
+        name: "name",
+        type: "input",
+        message: "What is the department name?"
+      },
+      {
+        name: "description",
+        type: "input",
+        message: "Please provide a desrciption?"
+      },
+    ])
+      .then((ans) => {
+        db.query("INSERT INTO roles SET ?", ans, function (err, results) {
+          if(err) {
+            console.log(err)
+          }
+          console.log(results);
+        });
+      })
+_______________________
 
     }).then(
       (answer) => {
