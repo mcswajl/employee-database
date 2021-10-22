@@ -110,14 +110,41 @@ _______________________
               });
             })
 
-        } else if (answer.name == 'View all Roles') {
-          db.query("SELECT * FROM roles", function (err, results) {
-            if(err) {
-              console.log(err)
-            }
-            console.table(results);
-          });
-        }
+          }).then(
+            (answer) => {
+              console.log(answer.name)
+              if (answer.name == "Add a new employee") {
+                inquirer.prompt([
+                  {
+                    name: "first_name",
+                    type: "input",
+                    message: "Employee first name?"
+                  },
+                  {
+                    name: "las_name",
+                    type: "input",
+                    message: "Employee last name?"
+                  },
+                  {
+                    name: "roles_id",
+                    type: "input",
+                    message: "Employees role ID?"
+                  },
+                  {
+                    name: "manager_id",
+                    type: "input",
+                    message: "Employees manager ID?"
+                  },
+                ])
+                  .then((ans) => {
+                    db.query("INSERT INTO roles SET ?", ans, function (err, results) {
+                      if(err) {
+                        console.log(err)
+                      }
+                      console.log(results);
+                    });
+                  })
+          }
       })
 
   employeeActions();

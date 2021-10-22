@@ -1,10 +1,10 @@
 INSERT INTO department (name, description) 
 VALUES 
-("Parks:"),
-("Rec:"),
-("WQ:"),
-("AQ:"),
-("ITS:"); 
+("Parks:", "Public Parks"),
+("Rec:", "Public Recreation"),
+("WQ:", "Water Quality"),
+("AQ:", "Air Quality"),
+("ITS:", "Information Technolegy Service"); 
 
 INSERT INTO roles (title, department_id, salary) 
 VALUES 
