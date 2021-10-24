@@ -17,8 +17,8 @@ db.connect(err => {
           "view all departments",
           "view all roles",
           "view all employee",
-          "add a department",
           "add a new role",
+          "add a department",
           "add an employee",
           // "update an employee role",
           "Exit"
@@ -48,7 +48,7 @@ db.connect(err => {
           });
         }
 
-        else if (answer.name == 'view all employees') {
+        else if (answer.name == 'view all employee') {
           db.query("SELECT * FROM employee", function (err, results) {
             if (err) {
               console.log(err)
@@ -58,7 +58,7 @@ db.connect(err => {
           });
         }
 
-        if (answer.name == "Add a new department") {
+        else if (answer.name == "Add a department") {
           inquirer.prompt([
             {
               name: "name",
@@ -72,7 +72,7 @@ db.connect(err => {
             },
           ])
             .then((ans) => {
-              db.query("INSERT INTO roles SET ?", ans, function (err, results) {
+              db.query("INSERT INTO department SET ?", ans, function (err, results) {
                 if (err) {
                   console.log(err)
                 }
@@ -140,7 +140,7 @@ db.connect(err => {
                             },
                           ])
                             .then((ans) => {
-                              db.query("INSERT INTO roles SET ?", ans, function (err, results) {
+                              db.query("INSERT INTO employee SET ?", ans, function (err, results) {
                                 if (err) {
                                   console.log(err)
                                 }
@@ -167,5 +167,7 @@ db.connect(err => {
                 }
               });
             }
+            employeeActions();
           })
+
 
