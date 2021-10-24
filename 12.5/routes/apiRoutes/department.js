@@ -57,7 +57,7 @@ router.get('/department/:id', (req, res) => {
       data: body
     });
   });
-});
+
 
 // // Update a department id
 // router.put('/department/:id', (req, res) => {
@@ -85,7 +85,6 @@ router.get('/department/:id', (req, res) => {
       });
     }
   });
-});
 
 // Delete a department by id
 router.delete('/department/:id', (req, res) => {
