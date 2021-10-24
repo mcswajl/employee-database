@@ -17,8 +17,8 @@ db.connect(err => {
           "view all departments",
           "view all roles",
           "view all employee",
-          "add a new role",
           "add a department",
+          "add a role",
           "add an employee",
           // "update an employee role",
           "Exit"
@@ -58,7 +58,7 @@ db.connect(err => {
           });
         }
 
-        else if (answer.name == "Add a department") {
+        else if (answer.name == "add a department") {
           inquirer.prompt([
             {
               name: "name",
@@ -71,8 +71,8 @@ db.connect(err => {
               message: "Please provide a desrciption?"
             },
           ])
-            .then((ans) => {
-              db.query("INSERT INTO department SET ?", ans, function (err, results) {
+            .then((answer) => {
+              db.query("INSERT INTO department SET ?", answer, function (err, results) {
                 if (err) {
                   console.log(err)
                 }
@@ -80,29 +80,26 @@ db.connect(err => {
                 employeeActions();
               });
             })
-
-            .then(
-              (answer) => {
-                console.log(answer.name)
-                if (answer.name == "Add a new Role") {
-                  inquirer.prompt([
-                    {
-                      name: "title",
-                      type: "input",
-                      message: "What is the title of the role?"
-                    },
-                    {
-                      name: "salary",
-                      type: "input",
-                      message: "What is the salary of the role?"
-                    },
-                    {
-                      name: "department_id",
-                      type: "input",
-                      message: "What is the department_id of the role?"
-                    },
-                  ])
-
+          }
+                      
+            else if (answer.name == "add a role") {
+              inquirer.prompt([
+                {
+                  name: "title",
+                  type: "input",
+                  message: "What is the title of the role?"
+                },
+                {
+                  name: "salary",
+                  type: "input",
+                  message: "What is the salary of the role?"
+                },
+                {
+                  name: "department_id",
+                  type: "input",
+                  message: "What is the department_id of the role?"
+                },
+              ]) 
                     .then((answer) => {
                       db.query("INSERT INTO roles SET ?", answer, function (err, results) {
                         if (err) {
@@ -112,43 +109,41 @@ db.connect(err => {
                         employeeActions();
                       });
                     })
+                  }
 
-                    .then(
-                      (answer) => {
-                        console.log(answer.name)
-                        if (answer.name == "Add a new employee") {
-                          inquirer.prompt([
-                            {
-                              name: "first_name",
-                              type: "input",
-                              message: "Employee first name?"
-                            },
-                            {
-                              name: "las_name",
-                              type: "input",
-                              message: "Employee last name?"
-                            },
-                            {
-                              name: "roles_id",
-                              type: "input",
-                              message: "Employees role ID?"
-                            },
-                            {
-                              name: "manager_id",
-                              type: "input",
-                              message: "Employees manager ID?"
-                            },
-                          ])
-                            .then((ans) => {
-                              db.query("INSERT INTO employee SET ?", ans, function (err, results) {
-                                if (err) {
-                                  console.log(err)
-                                }
-                                console.log(results);
-                                employeeActions();
-                              });
-                            })
-
+                  else if (answer.name == "add an employee") {
+                    inquirer.prompt([
+                      {
+                        name: "first_name",
+                        type: "input",
+                        message: "What is the employee first name?"
+                      },
+                      {
+                        name: "last_name",
+                        type: "input",
+                        message: "What is the employee last name?"
+                      },
+                      {
+                        name: "roles_id",
+                        type: "input",
+                        message: "What is the employee rold ID?"
+                      },
+                      {
+                        name: "manager_id",
+                        type: "input",
+                        message: "What is the employee manager ID?"
+                      },
+                    ]) 
+                          .then((answer) => {
+                            db.query("INSERT INTO employee SET ?", answer, function (err, results) {
+                              if (err) {
+                                console.log(err)
+                              }
+                              console.log(results);
+                              employeeActions();
+                            });
+                          })
+                        }
                   employeeActions();
 
 
@@ -160,14 +155,7 @@ db.connect(err => {
     //   }
     //   console.log(results);
     // });
-}
-                      });
-                    }
-                  });
-                }
-              });
-            }
-            employeeActions();
-          })
-
-
+});
+  }
+  employeeActions();
+})
