@@ -43,6 +43,7 @@ Screenshot of my website
 https://github.com/mcswajl/employee-database
 
 ## My walkthrough video link
+https://watch.screencastify.com/v/dgS7f0kT8nlKf9KgF2E6
 
 
 Contact
