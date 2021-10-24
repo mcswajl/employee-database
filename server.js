@@ -21,6 +21,7 @@ db.connect(err => {
           "add a role",
           "add an employee",
           // "update an employee role",
+          "delete an employee",
           "Exit"
         ]
       }
@@ -144,17 +145,27 @@ db.connect(err => {
                             });
                           })
                         }
-                  employeeActions();
 
 
-    // let deleteRow = 2;
+                  else if (answer.name == "delete an employee") {
+                    inquirer.prompt([
+                      {
+                        name: "employee_id",
+                        type: "input",
+                        message: "What is the employees ID?"
+                      },
+                    ])
+                    .then((answer) => {
+                      db.query("DELETE FROM employee Were id = ?", answer, function (err, results) {
+                        if (err) {
+                          console.log(err)
+                        }
+                        console.log(results);
+                        employeeActions();
+                      });
+                    })
+                  }
 
-    // db.query("DELETE FROM employee Where id = ?", deleteRow, (err, results) => {
-    //   if (err) {
-    //     console.log(err);
-    //   }
-    //   console.log(results);
-    // });
 });
   }
   employeeActions();
